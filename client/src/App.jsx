@@ -9,7 +9,7 @@ import SignUp from './pages/SignIn'
 
 const App = () => {
   return (
-    d
+    
     <Routes>
       <Route path='/' element={<Home/>} />
       <Route path='/about' element={<About />} />
