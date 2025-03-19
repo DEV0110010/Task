@@ -6,10 +6,12 @@ import Dashboard from './pages/Dashboard'
 import Projects from './pages/Projects'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignIn'
+import Header from './components/Header'
 
 const App = () => {
   return (
-    
+    <>
+    <Header/>
     <Routes>
       <Route path='/' element={<Home/>} />
       <Route path='/about' element={<About />} />
@@ -18,7 +20,7 @@ const App = () => {
       <Route path='/dashboard' element={<Dashboard />}/>
       <Route path='/projects' element={<Projects />}/>
     </Routes>
-    
+    </>
   )
 }
 export default App
