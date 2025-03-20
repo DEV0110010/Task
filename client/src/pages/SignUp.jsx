@@ -81,7 +81,7 @@ const SignUp = () => {
              }
             </Button>
           </form>
-          <div className='flex gap-2 textsm mt-5'>
+          <div className='flex gap-2 text-sm mt-5'>
             <span>
               Have an account?
             </span>
