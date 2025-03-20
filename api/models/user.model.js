@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     }, 
+    profilePicture:{
+        type: String,
+        default: 'https://static.vecteezy.com/system/resources/previews/011/675/374/original/man-avatar-image-for-profile-png.png',
+    },
 }, {timestamps: true}
 )
 
