@@ -10,9 +10,9 @@ const DashProfile = () => {
   const { currentUser } = useSelector(state => state.user)
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null)
-  const [imageFileUloadProgress, setImageFileUloadProgress] = useState(null)
-  const [imageFileUloadError, setImageFileUloadError] = useState(null)
-
+  const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null)
+  const [imageFileUploadError, setImageFileUploadError] = useState(null)
+  
   
   const filePickerRef = useRef();
   const handleImageChange = (e) => {
@@ -26,12 +26,10 @@ const DashProfile = () => {
     if (imageFile) {
       uploadImage();
     }
-
-
   }, [imageFile])
 
   const uploadImage = async () => {
-    setImageFileUloadError(null)
+    setImageFileUploadError(null)
     const storage = getStorage(app);
     const fileName = new Date().getTime() + imageFile.name;
     const storageRef = ref(storage, fileName);
@@ -40,10 +38,10 @@ const DashProfile = () => {
       'state_changed',
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setImageFileUloadProgress(progress.toFixed(0));
+        setImageFileUploadProgress(progress.toFixed(0));
       }, (error) => {
-        setImageFileUloadError('Could not upload image (File must be less than 2mb)')
-        setImageFileUloadProgress(null);
+        setImageFileUploadError('Could not upload image (File must be less than 2mb)')
+        setImageFileUploadProgress(null);
         setImageFile(null)
         setImageFileUrl(null)
       },
@@ -64,7 +62,7 @@ const DashProfile = () => {
           filePickerRef.current.click()
         }
         }>
-          {imageFileUloadProgress && (<CircularProgressbar value={imageFileUloadProgress || 0 } text={`${imageFileUloadProgress}%`} strokeWidth={5}
+          {imageFileUploadProgress && (<CircularProgressbar value={imageFileUploadProgress || 0 } text={`${imageFileUploadProgress}%`} strokeWidth={5}
           styles={{
             root:{
               width: '100%',
@@ -74,12 +72,12 @@ const DashProfile = () => {
               left:0,
             },
             path:{
-              stroke:`rgba(62,152,199 , ${imageFileUloadProgress / 100})`
+              stroke:`rgba(62,152,199 , ${imageFileUploadProgress / 100})`
             }
           }}/>)}
-          <img src={imageFileUrl || currentUser.profilePicture} alt="user" className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${imageFileUloadProgress && imageFileUloadProgress < 100 && 'opacity-60'}`} />
+          <img src={imageFileUrl || currentUser.profilePicture} alt="user" className={`rounded-full w-full h-full object-cover border-8 border-[lightgray] ${imageFileUploadProgress && imageFileUploadProgress < 100 && 'opacity-60'}`} />
         </div>
-        {imageFileUloadError && <Alert color='failure'>{imageFileUloadError}</Alert> }
+        {imageFileUploadError && <Alert color='failure'>{imageFileUploadError}</Alert> }
         
         <TextInput type='text' id='username' placeholder='username' defaultValue={currentUser.username} />
         <TextInput type='email' id='email' placeholder='email' defaultValue={currentUser.email} />
