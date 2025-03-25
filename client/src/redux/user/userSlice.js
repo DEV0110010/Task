@@ -50,10 +50,15 @@ const initialState = {
             state.loading = false;
             state.error = action.payload;
         },
+        signoutSuccess: (state) =>{
+            state.currentUser = null;
+            state.loading = false;
+            state.error = null;
+        },
 
     }
   });
 
-  export const { signInStart, signInFailure, signInSuccess, updateFailure, updateStart, updateSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess } = userSclice.actions;
+  export const { signInStart, signInFailure, signInSuccess, updateFailure, updateStart, updateSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess, signoutSuccess } = userSclice.actions;
 
   export default userSclice.reducer;
