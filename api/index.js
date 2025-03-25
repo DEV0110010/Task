@@ -5,6 +5,7 @@ import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
 
+
 dotenv.config();
 
 mongoose.connect(process.env.MONGO_URI).then(()=>{
