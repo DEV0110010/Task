@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'https://static.vecteezy.com/system/resources/previews/011/675/374/original/man-avatar-image-for-profile-png.png',
     },
+    isAdmin:{
+        type: Boolean,
+        default: false,
+    },
 }, {timestamps: true}
 )
 
