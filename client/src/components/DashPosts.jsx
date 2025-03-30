@@ -7,4 +7,3 @@ const DashPosts = () => {
 }
 
 export default DashPosts
-fff
