@@ -3,110 +3,112 @@
 @tailwind utilities;
 
 body {
-  min-height: 100vh; /* Use min-height instead of height for better flexibility */
+  min-height: 100vh;
 }
 
-/* Quill Editor Styling */
+/* ========== Quill Editor Styles ========== */
 .ql-editor {
   font-size: 1.05rem;
   line-height: 1.5;
 }
 
-/* Heading Styles */
-.post-content h1,
-.post-content h2 {
-  margin: 1.5rem 0;
-  font-family: sans-serif;
-}
-
-.post-content h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.post-content h2 {
-  font-size: 1.4rem;
-}
-
-/* Paragraph Styles */
-.post-content p {
-  margin-bottom: 0.5rem;
-}
-
-/* List Styles */
-.post-content ul li,
-.post-content ol li {
-  margin: 1.15rem 0;
-  margin-left: 1.3rem;
-}
-
-.post-content ul li {
-  list-style-type: circle;
-}
-
-.post-content ol li {
-  list-style-type: decimal;
-}
-
-/* Link Styling */
-.post-content a {
-  color: rgb(73, 149, 199);
-  text-decoration: none;
-}
-
-.post-content a:hover {
-  text-decoration: underline;
-}
-
-/* Link Focus Styles (for better accessibility) */
-.post-content a:focus {
-  outline: 2px solid rgb(73, 149, 199);
-}
-
-/* Code Block Styles */
-.post-content pre {
-  background-color: rgb(30, 41, 59);
-  border: 1px solid rgb(61, 69, 83);
-  color: rgb(232, 231, 231);
-  padding: 0.75rem;
+.ql-snow .ql-editor pre.ql-syntax {
+  background-color: #1e293b;
+  color: #f8fafc;
   border-radius: 0.5rem;
-  margin-bottom: 0.5rem;
-  overflow-x: auto; /* Ensure long code lines scroll horizontally */
-  word-wrap: break-word; /* Allow code to wrap in case of long lines */
-  max-width: 100%; /* Prevent code from stretching too far */
-}
-
-/* Inline Code Styles */
-.post-content code {
-  background-color: rgb(236, 236, 236);
-  padding: 0.25rem;
-  border-radius: 0.25rem;
-  font-size: 0.9rem;
-}
-
-/* Dark Mode Specific Styles */
-.dark .post-content code {
-  background-color: rgb(30, 41, 59);
-  border: 1px solid rgb(61, 69, 83);
-}
-
-.dark .post-content pre {
-  background-color: rgb(40, 51, 71); /* Darker background */
-  border: 1px solid rgb(61, 69, 83);
-  color: rgb(232, 231, 231); /* Lighter text */
-}
-
-/* Quill Editor's Code Block Styling */
-.ql-snow pre {
-  background-color: #f4f4f4;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 10px;
+  padding: 1rem;
   overflow-x: auto;
 }
 
-.ql-snow code {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 1em;
-  color: #333;
+/* ========== Post Content Styles ========== */
+.post-content {
+  @apply max-w-2xl mx-auto w-full;
+}
+
+/* Headings */
+.post-content h1 {
+  @apply text-3xl font-bold my-6;
+}
+
+.post-content h2 {
+  @apply text-2xl font-semibold my-5;
+}
+
+/* Paragraphs and text */
+.post-content p {
+  @apply my-4;
+}
+
+/* Lists */
+.post-content ul,
+.post-content ol {
+  @apply my-4 pl-8;
+}
+
+.post-content ul {
+  @apply list-disc;
+}
+
+.post-content ol {
+  @apply list-decimal;
+}
+
+.post-content li {
+  @apply my-2;
+}
+
+/* Links */
+.post-content a {
+  @apply text-blue-600 hover:underline dark:text-blue-400;
+}
+
+/* ========== Code Block Styles ========== */
+/* Inline code */
+.post-content :not(pre) > code {
+  @apply bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded text-sm font-mono;
+}
+
+/* Code blocks */
+.post-content pre {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-lg my-6 overflow-x-auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.post-content pre code {
+  @apply bg-transparent p-0 rounded-none;
+}
+
+/* Prism.js compatibility */
+.post-content pre[class*="language-"] {
+  @apply m-0;
+}
+
+.post-content code[class*="language-"] {
+  @apply text-inherit;
+}
+
+/* Line numbers */
+.post-content .line-numbers .line-numbers-rows {
+  @apply border-r border-gray-700;
+}
+
+/* ========== Dark Mode Styles ========== */
+.dark .post-content pre {
+  @apply bg-gray-800;
+}
+
+.dark .ql-snow .ql-editor pre.ql-syntax {
+  @apply bg-gray-800;
+}
+
+/* ========== Responsive Adjustments ========== */
+@media (max-width: 768px) {
+  .post-content pre {
+    @apply text-xs;
+    padding: 0.75rem;
+  }
+  
+  .post-content :not(pre) > code {
+    @apply text-xs;
+  }
 }

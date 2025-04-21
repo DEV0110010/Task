@@ -1,31 +1,28 @@
 import Post from "../models/post.model.js";
 import { errorHandler } from "../utils/error.js";
-
-
 import createDOMPurify from "dompurify";
 import { JSDOM } from "jsdom";
 
 const window = new JSDOM("").window;
 const DOMPurify = createDOMPurify(window);
 
-
 const sanitizeHTML = (dirty) =>
   DOMPurify.sanitize(dirty, {
     ALLOWED_TAGS: [
-      "p", "strong", "em", "u", "pre", "code", "h1", "h2", "h3",
+      "p", "strong", "em", "u", "pre", "code", "h1", "h2", "h3", "h4", "h5", "h6",
       "ul", "ol", "li", "span", "div", "br", "blockquote", "a",
-      "img", "b", "i"
+      "img", "b", "i", "table", "thead", "tbody", "tr", "th", "td"
     ],
-    ALLOWED_ATTR: ["class", "href", "src", "alt"],
+    ALLOWED_ATTR: ["class", "href", "src", "alt", "style", "target"],
+    FORBID_ATTR: ["style", "onerror"],
+    ADD_ATTR: ['target'],
+    ADD_TAGS: ['iframe'],
+    ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|ftp|tel):|[^a-z]|[a-z+.-]+(?:[^a-z+.\-:]|$))/i
   });
 
 export const create = async (req, res, next) => {
-  if (!req.user.isAdmin) {
-    return next(errorHandler(403, "You are not allowed to create a post"));
-  }
-  if (!req.body.title || !req.body.content) {
-    return next(errorHandler(400, "Please provide all required fields"));
-  }
+  if (!req.user.isAdmin) return next(errorHandler(403, "You are not allowed to create a post"));
+  if (!req.body.title || !req.body.content) return next(errorHandler(400, "Please provide all required fields"));
 
   const slug = req.body.title
     .split(" ")
@@ -33,12 +30,13 @@ export const create = async (req, res, next) => {
     .toLowerCase()
     .replace(/[^a-zA-Z0-9-]/g, "");
 
-  
-  const sanitizedContent = sanitizeHTML(req.body.content);
+  const processedContent = req.body.content
+    .replace(/<pre class="ql-syntax" spellcheck="false">/g, '<pre><code>')
+    .replace(/<\/pre>/g, '</code></pre>');
 
   const newPost = new Post({
     ...req.body,
-    content: sanitizedContent,
+    content: sanitizeHTML(processedContent),
     slug,
     userId: req.user.id,
   });
@@ -74,26 +72,12 @@ export const getposts = async (req, res, next) => {
       .limit(limit);
 
     const totalPosts = await Post.countDocuments();
+    const oneMonthAgo = new Date(new Date().setMonth(new Date().getMonth() - 1));
+    const lastMonthPosts = await Post.countDocuments({ createdAt: { $gte: oneMonthAgo } });
 
-    const now = new Date();
-    const oneMonthAgo = new Date(
-      now.getFullYear(),
-      now.getMonth() - 1,
-      now.getDate()
-    );
-
-    const lastMonthPosts = await Post.countDocuments({
-      createdAt: { $gte: oneMonthAgo },
-    });
-
-    res.status(200).json({
-      posts,
-      totalPosts,
-      lastMonthPosts,
-    });
+    res.status(200).json({ posts, totalPosts, lastMonthPosts });
   } catch (error) {
     next(error);
-    console.log(error);
   }
 };
 
@@ -114,8 +98,9 @@ export const updatepost = async (req, res, next) => {
     return next(errorHandler(403, "You are not allowed to update this post"));
   }
 
- 
-  const sanitizedContent = sanitizeHTML(req.body.content);
+  const processedContent = req.body.content
+    .replace(/<pre class="ql-syntax" spellcheck="false">/g, '<pre><code>')
+    .replace(/<\/pre>/g, '</code></pre>');
 
   try {
     const updatedPost = await Post.findByIdAndUpdate(
@@ -123,7 +108,7 @@ export const updatepost = async (req, res, next) => {
       {
         $set: {
           title: req.body.title,
-          content: sanitizedContent,
+          content: sanitizeHTML(processedContent),
           category: req.body.category,
           image: req.body.image,
         },
