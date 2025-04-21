@@ -3,42 +3,52 @@
 @tailwind utilities;
 
 body {
-  height: 100vh;
+  min-height: 100vh; /* Use min-height instead of height for better flexibility */
 }
 
+/* Quill Editor Styling */
 .ql-editor {
   font-size: 1.05rem;
+  line-height: 1.5;
 }
 
-.post-content p {
-  margin-bottom: 0.5rem;
+/* Heading Styles */
+.post-content h1,
+.post-content h2 {
+  margin: 1.5rem 0;
+  font-family: sans-serif;
 }
 
 .post-content h1 {
   font-size: 1.5rem;
   font-weight: 600;
-  font-family: sans-serif;
-  margin: 1.5rem 0;
 }
 
 .post-content h2 {
   font-size: 1.4rem;
-  font-family: sans-serif;
-  margin: 1.5rem 0;
+}
+
+/* Paragraph Styles */
+.post-content p {
+  margin-bottom: 0.5rem;
+}
+
+/* List Styles */
+.post-content ul li,
+.post-content ol li {
+  margin: 1.15rem 0;
+  margin-left: 1.3rem;
 }
 
 .post-content ul li {
-  margin: 1.15rem 0;
-  margin-left: 1.3rem;
   list-style-type: circle;
 }
 
 .post-content ol li {
-  margin: 1.15rem 0;
-  margin-left: 1.3rem;
   list-style-type: decimal;
 }
 
+/* Link Styling */
 .post-content a {
   color: rgb(73, 149, 199);
   text-decoration: none;
@@ -48,17 +58,22 @@ body {
   text-decoration: underline;
 }
 
+/* Link Focus Styles (for better accessibility) */
+.post-content a:focus {
+  outline: 2px solid rgb(73, 149, 199);
+}
+
 /* Code Block Styles */
 .post-content pre {
   background-color: rgb(30, 41, 59);
   border: 1px solid rgb(61, 69, 83);
   color: rgb(232, 231, 231);
-  white-space: pre-wrap;
-  padding: 0.5rem;
+  padding: 0.75rem;
   border-radius: 0.5rem;
   margin-bottom: 0.5rem;
   overflow-x: auto; /* Ensure long code lines scroll horizontally */
   word-wrap: break-word; /* Allow code to wrap in case of long lines */
+  max-width: 100%; /* Prevent code from stretching too far */
 }
 
 /* Inline Code Styles */
@@ -73,6 +88,12 @@ body {
 .dark .post-content code {
   background-color: rgb(30, 41, 59);
   border: 1px solid rgb(61, 69, 83);
+}
+
+.dark .post-content pre {
+  background-color: rgb(40, 51, 71); /* Darker background */
+  border: 1px solid rgb(61, 69, 83);
+  color: rgb(232, 231, 231); /* Lighter text */
 }
 
 /* Quill Editor's Code Block Styling */
