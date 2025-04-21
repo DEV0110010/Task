@@ -25,7 +25,7 @@ const modules = {
   };
   const formats = [
     'header', 'bold', 'italic', 'underline', 'strike', 
-    'list', 'bullet', 'code-block', 'link', 'image'
+    'list', 'code-block', 'link', 'image'
   ];
 const CreatePost = () => {
     const navigate = useNavigate();

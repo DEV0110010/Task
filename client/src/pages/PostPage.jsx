@@ -1,11 +1,11 @@
 import { Button, Spinner } from "flowbite-react";
+import he from "he"; // Importing the 'he' library for decoding HTML entities
+import Prism from "prismjs"; // Import PrismJS for syntax highlighting
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import he from "he";  // Importing the 'he' library for decoding HTML entities
 import CallToAction from "../components/CallToAction";
 import CommentSection from "../components/CommentSection";
 import PostCard from "../components/PostCard";
-import Prism from "prismjs"; // Import PrismJS for syntax highlighting
 
 import "prismjs/themes/prism.css"; // Import the default Prism theme (optional)
 

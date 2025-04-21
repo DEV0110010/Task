@@ -26,7 +26,7 @@ const modules = {
 };
 const formats = [
   'header', 'bold', 'italic', 'underline', 'strike', 
-  'list', 'bullet', 'code-block', 'link', 'image'
+  'list', 'code-block', 'link', 'image'
 ];
 const UpdatePost = () => {
     const { currentUser } = useSelector((state) => state.user);
