@@ -13,6 +13,20 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
 
+const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['code-block'], 
+      ['link', 'image'],
+      ['clean'],
+    ],
+  };
+  const formats = [
+    'header', 'bold', 'italic', 'underline', 'strike', 
+    'list', 'bullet', 'code-block', 'link', 'image'
+  ];
 const CreatePost = () => {
     const navigate = useNavigate();
     const [file, setFile] = useState(null);
@@ -358,6 +372,8 @@ const CreatePost = () => {
                     placeholder="Write something"
                     className="h-72 mb-12"
                     required
+                    modules={modules}
+                    formats={formats} 
                     onChange={(value) => {
                         setFormData({ ...formData, content: value })
                       }

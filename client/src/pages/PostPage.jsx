@@ -1,9 +1,13 @@
 import { Button, Spinner } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import he from "he";  // Importing the 'he' library for decoding HTML entities
 import CallToAction from "../components/CallToAction";
 import CommentSection from "../components/CommentSection";
 import PostCard from "../components/PostCard";
+import Prism from "prismjs"; // Import PrismJS for syntax highlighting
+
+import "prismjs/themes/prism.css"; // Import the default Prism theme (optional)
 
 const PostPage = () => {
   const { postSlug } = useParams();
@@ -53,6 +57,13 @@ const PostPage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    // Highlight code blocks after content is decoded and rendered
+    if (post && post.content) {
+      Prism.highlightAll(); // Ensure syntax highlighting
+    }
+  }, [post]);
+
   if (loading)
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -60,15 +71,15 @@ const PostPage = () => {
       </div>
     );
 
+  // Decode the HTML content before rendering
+  const decodedContent = post && post.content ? he.decode(post.content) : null;
+
   return (
     <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
       <h1 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl">
         {post && post.title}
       </h1>
-      <Link
-        to={`/search?category=${post && post.category}`}
-        className="self-center mt-5"
-      >
+      <Link to={`/search?category=${post && post.category}`} className="self-center mt-5">
         <Button color="gray" pill size="xs">
           {post && post.category}
         </Button>
@@ -84,10 +95,15 @@ const PostPage = () => {
           {post && (post.content.length / 1000).toFixed(0)} mins read
         </span>
       </div>
-      <div
-        className="p-3 max-w-2xl mx-auto w-full post-content"
-        dangerouslySetInnerHTML={{ __html: post && post.content }}
-      ></div>
+
+      {/* Conditionally render decoded content */}
+      {decodedContent && (
+        <div
+          className="p-3 max-w-2xl mx-auto w-full post-content"
+          dangerouslySetInnerHTML={{ __html: decodedContent }}
+        ></div>
+      )}
+
       <div className="max-w-4xl mx-auto w-full">
         <CallToAction />
       </div>
@@ -96,9 +112,9 @@ const PostPage = () => {
       <div className="flex flex-col justify-center items-center mb-5">
         <h1 className="text-xl mt-5">Recent Articles</h1>
         <div className="flex flex-wrap gap-5 mt-5 justify-center">
-            {recentPosts && recentPosts.map((post)=>(
-                <PostCard key={post._id} post={post}/>
-            ))}
+          {recentPosts && recentPosts.map((post) => (
+            <PostCard key={post._id} post={post} />
+          ))}
         </div>
       </div>
     </main>

@@ -20,21 +20,72 @@ body {
   font-family: sans-serif;
   margin: 1.5rem 0;
 }
-.post-content h1 {
+
+.post-content h2 {
   font-size: 1.4rem;
   font-family: sans-serif;
   margin: 1.5rem 0;
 }
 
-.post-content a{
-    color: rgb(73,149,199);
-    text-decoration: none;
+.post-content ul li {
+  margin: 1.15rem 0;
+  margin-left: 1.3rem;
+  list-style-type: circle;
 }
 
-.post-content a:hover{
-    text-decoration: underline;
+.post-content ol li {
+  margin: 1.15rem 0;
+  margin-left: 1.3rem;
+  list-style-type: decimal;
 }
 
-.dark .post-content a{
-    color: red;
+.post-content a {
+  color: rgb(73, 149, 199);
+  text-decoration: none;
+}
+
+.post-content a:hover {
+  text-decoration: underline;
+}
+
+/* Code Block Styles */
+.post-content pre {
+  background-color: rgb(30, 41, 59);
+  border: 1px solid rgb(61, 69, 83);
+  color: rgb(232, 231, 231);
+  white-space: pre-wrap;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  overflow-x: auto; /* Ensure long code lines scroll horizontally */
+  word-wrap: break-word; /* Allow code to wrap in case of long lines */
+}
+
+/* Inline Code Styles */
+.post-content code {
+  background-color: rgb(236, 236, 236);
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.9rem;
+}
+
+/* Dark Mode Specific Styles */
+.dark .post-content code {
+  background-color: rgb(30, 41, 59);
+  border: 1px solid rgb(61, 69, 83);
+}
+
+/* Quill Editor's Code Block Styling */
+.ql-snow pre {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+.ql-snow code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1em;
+  color: #333;
 }
